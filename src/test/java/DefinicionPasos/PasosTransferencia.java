@@ -1,7 +1,13 @@
 package DefinicionPasos;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
+
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -16,10 +22,11 @@ public class PasosTransferencia {
 	@Before
 	public void setUp() throws Exception {
 		System.setProperty(tipoDriver, pathDriver);
-		driver=new ChromeDriver();
+		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 	}
+	
 	@After
 	public void tearDown() throws Exception {
 		if (driver != null)
@@ -27,28 +34,47 @@ public class PasosTransferencia {
 	}
 	
 	@Given("al navegar hasta la url {string}")
-	public void al_navegar_hasta_la_url(String url) throws InterruptedException
-	{
+	public void al_navegar_hasta_la_url(String url) throws InterruptedException {
 		driver.get(url);
 		Thread.sleep(5000);
 	}
 	
 	@When("hacer click en el campo de usuario {string}")
-	public void hacer_click_en_el_campo_de_usuario(String input) 
-	throws InterruptedException
-	{
+	public void hacer_click_en_el_campo_de_usuario(String input) throws InterruptedException {
 		driver.findElement(By.xpath(input)).click();
 		Thread.sleep(3000);
 	}
 
-	@When("coloca en el campo usuario {string} el texto {string}")
+	@When("coloca en el campo usuario {string} el usuario {string}")
 	public void coloca_en_el_campo_usuario_el_texto(String campoUsuario, String usuario) throws InterruptedException {
-		driver.findElement(By.xpath(campoUsuario)).sendKeys(usuario);
+	    WebElement campo = driver.findElement(By.xpath(campoUsuario));
+	    campo.sendKeys(usuario);
+	    Thread.sleep(3000);
+	}
+	
+	@When("hacer click en el campo de contraseña {string}")
+	public void hacer_click_en_el_campo_de_pass(String input) throws InterruptedException {
+		driver.findElement(By.xpath(input)).click();
 		Thread.sleep(3000);
+	}
+	
+	@When("coloca en el campo contraseña {string} la contraseña {string}")
+	public void coloca_en_el_campo_pass_la_pass(String campoPassword, String password) throws InterruptedException {
+	    WebElement campo = driver.findElement(By.xpath(campoPassword));
+	    campo.sendKeys(password);
+	    Thread.sleep(3000);
 	}
 	
 	@Then("apretar boton de inicio sesion {string}")
 	public void apreta_el_boton(String boton) throws InterruptedException {
 		driver.findElement(By.xpath(boton)).click();
 	}
+	
+	@Then("esperar el inicio de sesion {string}")
+	public void espera_la_sesion(String menu) throws InterruptedException {
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(menu)));
+	}
+	
+	
 }
