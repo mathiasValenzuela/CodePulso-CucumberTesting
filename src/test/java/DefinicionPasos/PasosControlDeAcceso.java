@@ -14,9 +14,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class PasosTransferencia {
+public class PasosControlDeAcceso {
 	static WebDriver driver;
-    static WebDriverWait wait; // Declarar WebDriverWait como variable global
+    static WebDriverWait wait;
 	static String pathDriver="./src/test/resources/chrome/chromedriver.exe";
 	static String tipoDriver="webdriver.chrome.driver";
 	
@@ -72,6 +72,11 @@ public class PasosTransferencia {
 	@Then("esperar el inicio de sesion {string}")
 	public void espera_la_sesion(String menu) throws InterruptedException {
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(menu)));
+	}
+
+	@Then("esperar el mensaje de error {string}")
+	public void espera_el_error(String msg) throws InterruptedException {
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(msg)));
 	}
 	
 	
