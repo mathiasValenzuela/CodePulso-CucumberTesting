@@ -10,6 +10,7 @@ Scenario: Eliminar usuario exitosamente
   And esperar el inicio de sesion "//*[@id='root']/div/nav/ul/a[1]"
   And hacer click en el modulo del menu llamado panel admin "//*[@id='root']/div/nav/ul/a[2]/li"
   And hacer click en el recurso llamado users "//*[@id='tab:r0:3']"
+  And hacer click en ultima actividad para eliminar usuario inactivo "//*[@id='panel:r0:3']/div/div/section/div[2]/div[1]/table/thead/tr/th[5]"
   Then capturo el nombre del último usuario en la tabla
   And seleccionar el botón de eliminar del último usuario
   Then confirmo que el nombre en el modal es el mismo
@@ -26,6 +27,7 @@ Scenario: Cancelar eliminación de usuario
   And esperar el inicio de sesion "//*[@id='root']/div/nav/ul/a[1]"
   And hacer click en el modulo del menu llamado panel admin "//*[@id='root']/div/nav/ul/a[2]/li"
   And hacer click en el recurso llamado users "//*[@id='tab:r0:3']"
+  And hacer click en ultima actividad para eliminar usuario inactivo "//*[@id='panel:r0:3']/div/div/section/div[2]/div[1]/table/thead/tr/th[5]"
   Then capturo el nombre del último usuario en la tabla
   And seleccionar el botón de eliminar del último usuario
   Then confirmo que el nombre en el modal es el mismo
