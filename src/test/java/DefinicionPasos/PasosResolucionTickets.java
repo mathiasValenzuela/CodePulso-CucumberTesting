@@ -9,7 +9,7 @@ import org.junit.Assert;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 
-public class PasosCreacionResolucionTickets {
+public class PasosResolucionTickets {
 
     private WebDriver driver = DriverManager.getDriver();
 
@@ -55,8 +55,8 @@ public class PasosCreacionResolucionTickets {
         }
     }
 
-    @And("seleccionar y hacer click en boton editar de un ticket que su estado sea cerrado")
-    public void seleccionar_y_hacer_click_en_boton_editar_de_un_ticket_que_su_estado_sea_cerrado() {
+    @And("hacer click en boton editar de un ticket que su estado sea cerrado")
+    public void hacer_click_en_boton_editar_de_un_ticket_que_su_estado_sea_cerrado() {
         try {
             WebElement estadoElemento = DriverManager.getWait().until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath("//*[@id='panel:r0:2']/div/div/section/div[2]/div[1]/table/tbody/tr[4]/td[3]/div/p")));
@@ -86,8 +86,8 @@ public class PasosCreacionResolucionTickets {
         }
     }
 
-    @And("seleccionar y hacer click en boton editar de un ticket que su estado sea abierto")
-    public void seleccionar_y_hacer_click_en_boton_editar_de_un_ticket_que_su_estado_sea_abierto() {
+    @And("hacer click en boton editar de un ticket que su estado sea abierto")
+    public void hacer_click_en_boton_editar_de_un_ticket_que_su_estado_sea_abierto() {
         try {
             WebElement estadoElemento = DriverManager.getWait().until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath("//*[@id='panel:r0:2']/div/div/section/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/p")));
@@ -96,7 +96,7 @@ public class PasosCreacionResolucionTickets {
             Assert.assertEquals("Abierto", estado);
 
             WebElement botonEditar = DriverManager.getWait().until(ExpectedConditions.elementToBeClickable(
-                    By.xpath("//*[@id='panel:r0:2']/div/div/section/div[2]/div[1]/table/tbody/tr[1]/td[5]/button")));
+                    By.xpath("//*[@id='panel:r0:2']/div/div/section/div[2]/div[1]/table/tbody/tr[1]/td[3]/button")));
 
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", botonEditar);
             botonEditar.click();
@@ -109,8 +109,8 @@ public class PasosCreacionResolucionTickets {
     public void hacerClickEnBotonActualizar(String xpath) {
         try {
             WebElement botonActualizar = DriverManager.getWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
-            DriverManager.getWait().until(ExpectedConditions.elementToBeClickable(botonActualizar)); // Espera que sea clickeable
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", botonActualizar); // Asegúrate de que el botón esté visible
+            DriverManager.getWait().until(ExpectedConditions.elementToBeClickable(botonActualizar));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", botonActualizar);
             botonActualizar.click();
         } catch (Exception e) {
             System.out.println("Error al hacer clic en el botón de actualizar: " + e.getMessage());

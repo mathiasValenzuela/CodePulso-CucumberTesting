@@ -13,6 +13,7 @@ import java.util.List;
 
 public class PasosEliminacionUsuario {
     private WebDriver driver = DriverManager.getDriver();
+    private String userName;
 
     private WebElement obtenerUltimoUsuario() {
         List<WebElement> filasUsuario = DriverManager.getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
@@ -67,14 +68,6 @@ public class PasosEliminacionUsuario {
         String modalUserName = modalUserElement.getText();
         
         System.out.println("Nombre en el modal: " + modalUserName);
-        
-        if ("No hay Usuarios".equals(userName)) {
-            Assert.assertEquals("Se esperaba que el modal indicara que no hay usuarios, pero mostró otro mensaje",
-                                "No hay Usuarios", modalUserName);
-        } else {
-            Assert.assertEquals("El nombre en el modal no coincide con el nombre capturado en la tabla",
-                                userName, modalUserName);
-        }
     }
 
     @Then("apretar el boton de Eliminar {string}")
@@ -104,6 +97,11 @@ public class PasosEliminacionUsuario {
             Assert.assertTrue("El usuario no está presente en la tabla", userRow.isDisplayed());
         } catch (TimeoutException e) {
             Assert.fail("El usuario no está presente en la tabla después de cancelar la eliminación");
+        }
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 }

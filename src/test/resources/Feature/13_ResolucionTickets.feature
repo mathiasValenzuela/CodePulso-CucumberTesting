@@ -1,4 +1,4 @@
-Feature: Proceso de Negocio - Creación y Resolución de Tickets
+Feature: Proceso de Negocio - Resolución de Tickets
 
 Scenario: Proceso de cierre de ticket sin respuesta
   Given al navegar hasta la url "https://bridge.codepulso.com/"
@@ -26,7 +26,7 @@ Scenario: Visualización de ticket cerrado
   And esperar el inicio de sesion "//*[@id='root']/div/nav/ul/a[1]"
   And hacer click en el modulo del menu llamado panel admin "//*[@id='root']/div/nav/ul/a[2]/li"
   And hacer click en el recurso llamado Tickets "//*[@id='tab:r0:2']"
-  And seleccionar y hacer click en boton editar de un ticket que su estado sea cerrado
+  And hacer click en boton editar de un ticket que su estado sea cerrado
 	Then visualizo estado y mensaje de usuario "//*[@id='panel:r0:2']/div/div/div/div[2]/div/textarea"
 
 Scenario: Visualización de ticket en espera
@@ -39,7 +39,7 @@ Scenario: Visualización de ticket en espera
   And esperar el inicio de sesion "//*[@id='root']/div/nav/ul/a[1]"
   And hacer click en el modulo del menu llamado panel admin "//*[@id='root']/div/nav/ul/a[2]/li"
   And hacer click en el recurso llamado Tickets "//*[@id='tab:r0:2']"
-  And seleccionar y hacer click en boton editar de un ticket que su estado sea abierto
+  And hacer click en boton editar de un ticket que su estado sea abierto
 	Then visualizo estado y mensaje de usuario "//*[@id='panel:r0:2']/div/div/div/div[2]/div/textarea"
 
 Scenario: Actualizar historial de tickets
