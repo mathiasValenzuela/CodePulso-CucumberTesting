@@ -9,6 +9,7 @@ import org.openqa.selenium.TimeoutException;
 import org.junit.Assert;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java.en.And;
 import java.util.List;
 
 public class PasosEliminacionUsuario {
@@ -40,6 +41,27 @@ public class PasosEliminacionUsuario {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", usersTab);
     }
 
+    @And("hacer click en ultima actividad para eliminar usuario inactivo {string}")
+    public void hacerClickEnUltimaActividad(String xpath) {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        try {
+            WebElement ultimaActividad = DriverManager.getWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", ultimaActividad);
+
+            ultimaActividad.click();
+            
+            System.out.println("Se hizo clic en la última actividad para eliminar el usuario inactivo.");
+        } catch (Exception e) {
+            System.out.println("Error al hacer clic en la última actividad: " + e.getMessage());
+        }
+    }
+
+    
     @Then("capturo el nombre del último usuario en la tabla")
     public void capturo_el_nombre_del_ultimo_usuario_en_la_tabla() {
         List<WebElement> filasUsuarios = driver.findElements(By.xpath("//*[@id='panel:r0:3']/div/div/section/div[2]/div[1]/table/tbody/tr"));
@@ -63,6 +85,11 @@ public class PasosEliminacionUsuario {
 
     @Then("confirmo que el nombre en el modal es el mismo")
     public void confirmo_que_el_nombre_en_el_modal_es_el_mismo() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         WebElement modalUserElement = DriverManager.getWait().until(ExpectedConditions.visibilityOfElementLocated(
             By.xpath("//*[@id='panel:r0:3']/div/div/div/div[2]/div/p")));
         String modalUserName = modalUserElement.getText();

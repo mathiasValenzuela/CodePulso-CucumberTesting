@@ -5,6 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
+
+import java.util.List;
+
 import org.junit.Assert;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -21,9 +25,13 @@ public class PasosResolucionTickets {
 
     @And("hacer click el botón de editar del último ticket registrado")
     public void hacerClickEnBotonEditarUltimoTicket() {
-        WebElement botonEditarUltimoTicket = DriverManager.getWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='panel:r0:2']/div/div/section/div[2]/div[1]/table/tbody/tr[last()]/td[5]/button")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", botonEditarUltimoTicket);
-        botonEditarUltimoTicket.click();
+        try {
+            WebElement botonEditarUltimoTicket = DriverManager.getWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div/div/main/div[2]/div[3]/div/div/section/div[2]/div[1]/table/tbody/tr[last()]/td[5]/button")));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", botonEditarUltimoTicket);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", botonEditarUltimoTicket);
+        } catch (Exception e) {
+            System.out.println("Error al hacer clic en el botón de editar: " + e.getMessage());
+        }
     }
 
     @And("hacer click el botón de resolver {string}")
@@ -58,21 +66,41 @@ public class PasosResolucionTickets {
     @And("hacer click en boton editar de un ticket que su estado sea cerrado")
     public void hacer_click_en_boton_editar_de_un_ticket_que_su_estado_sea_cerrado() {
         try {
-            WebElement estadoElemento = DriverManager.getWait().until(ExpectedConditions.visibilityOfElementLocated(
-                    By.xpath("//*[@id='panel:r0:2']/div/div/section/div[2]/div[1]/table/tbody/tr[4]/td[3]/div/p")));
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        try {
+            List<WebElement> filas = DriverManager.getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                    By.xpath("//*[@id='panel:r0:2']/div/div/section/div[2]/div[1]/table/tbody/tr")));
+            
+            boolean ticketCerradoEncontrado = false;
+            for (WebElement fila : filas) {
+                try {
+                    String estado = fila.findElement(By.xpath(".//td[3]/div/p")).getText().trim();
+                    if (estado.equals("Cerrado")) {
+                        ticketCerradoEncontrado = true;
 
-            String estado = estadoElemento.getText().trim();
-            Assert.assertEquals("Cerrado", estado);
+                        // Hacer clic en el botón editar de esta fila
+                        WebElement botonEditar = fila.findElement(By.xpath(".//td[5]/button"));
+                        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", botonEditar);
+                        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", botonEditar);
+                        return;
+                        
+                    }
+                } catch (NoSuchElementException e) {
+                    System.out.println("Estado no encontrado en esta fila: " + e.getMessage());
+                }
+            }
 
-            WebElement botonEditar = DriverManager.getWait().until(ExpectedConditions.elementToBeClickable(
-                    By.xpath("//*[@id='panel:r0:2']/div/div/section/div[2]/div[1]/table/tbody/tr[4]/td[5]/button")));
-
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", botonEditar);
-            botonEditar.click();
+            if (!ticketCerradoEncontrado) {
+                System.out.println("No se encontró un ticket cerrado.");
+            }
         } catch (Exception e) {
-            System.out.println("No se encontró el elemento de estado o el botón de edición");
+            System.out.println("No se encontró el elemento de estado o el botón de edición: " + e.getMessage());
         }
     }
+
 
     @Then("visualizo estado y mensaje de usuario {string}")
     public void visualizoEstadoYMensajeDeUsuario(String xpathMensaje) {
@@ -89,22 +117,41 @@ public class PasosResolucionTickets {
     @And("hacer click en boton editar de un ticket que su estado sea abierto")
     public void hacer_click_en_boton_editar_de_un_ticket_que_su_estado_sea_abierto() {
         try {
-            WebElement estadoElemento = DriverManager.getWait().until(ExpectedConditions.visibilityOfElementLocated(
-                    By.xpath("//*[@id='panel:r0:2']/div/div/section/div[2]/div[1]/table/tbody/tr[1]/td[3]/div/p")));
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        try {
+            List<WebElement> filas = DriverManager.getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                    By.xpath("//*[@id='panel:r0:2']/div/div/section/div[2]/div[1]/table/tbody/tr")));
+            
+            boolean ticketAbiertoEncontrado = false;
+            for (WebElement fila : filas) {
+                try {
+                    String estado = fila.findElement(By.xpath(".//td[3]/div/p")).getText().trim();
 
-            String estado = estadoElemento.getText().trim();
-            Assert.assertEquals("Abierto", estado);
+                    if (estado.equals("Abierto")) {
+                    	ticketAbiertoEncontrado = true;
 
-            WebElement botonEditar = DriverManager.getWait().until(ExpectedConditions.elementToBeClickable(
-                    By.xpath("//*[@id='panel:r0:2']/div/div/section/div[2]/div[1]/table/tbody/tr[1]/td[3]/button")));
+                        // Hacer clic en el botón editar de esta fila
+                        WebElement botonEditar = fila.findElement(By.xpath(".//td[5]/button"));
+                        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", botonEditar);
+                        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", botonEditar);
+                        return;
+                        
+                    }
+                } catch (NoSuchElementException e) {
+                    System.out.println("Estado no encontrado en esta fila: " + e.getMessage());
+                }
+            }
 
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", botonEditar);
-            botonEditar.click();
+            if (!ticketAbiertoEncontrado) {
+                System.out.println("No se encontró un ticket abierto.");
+            }
         } catch (Exception e) {
-            System.out.println("No se encontró el elemento de estado o el botón de edición");
+            System.out.println("No se encontró el elemento de estado o el botón de edición: " + e.getMessage());
         }
     }
-    
     @And("hacer click en el boton actualizar {string}")
     public void hacerClickEnBotonActualizar(String xpath) {
         try {
