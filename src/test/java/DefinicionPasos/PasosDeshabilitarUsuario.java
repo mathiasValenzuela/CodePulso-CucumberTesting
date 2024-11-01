@@ -46,6 +46,16 @@ public class PasosDeshabilitarUsuario {
         }
     }
     
+    @And("ordenar por estado {string}")
+    public void ordenarEstado(String xpath) {
+        try {
+            DriverManager.getWait().until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+        	driver.findElement(By.xpath(xpath)).click();
+        } catch (Exception e) {
+            System.out.println("Error al clickear el toggle" + e.getMessage());
+        }
+    }
+    
     @And("clickear el toggle {string}")
     public void clickToggle(String xpath) {
         try {

@@ -22,7 +22,7 @@ Scenario: Navegación a la sección de soporte
   Then navegar a seccion "//*[@id='root']/div/nav/ul/a[2]"
   Then verificar seccion "//*[@id='root']/div/main/section/div[1]/h2" con texto "Mis Tickets"
   
-Scenario: Navegación a la sección de soporte
+Scenario: Navegación a la sección de configuracion
   Given al navegar hasta la url "https://bridge.codepulso.com/"
   When hacer click en el campo de usuario "//*[@id='root']/section/section/div[2]/form/input"
   Then coloca en el campo usuario "//*[@id='root']/section/section/div[2]/form/input" el usuario "test2"
