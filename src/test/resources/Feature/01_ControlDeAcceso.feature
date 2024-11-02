@@ -61,7 +61,7 @@ Scenario: Login con correo electronico
   Then apretar boton de inicio sesion "//*[@id='root']/section/section/div[2]/form/button"
   Then esperar el mensaje de error "//*[@id='root']/section/section/div[1]/div/div/div[2]"
 
-
+#a
 Scenario: Login con usuario sensitivo a mayusculas
   Given al navegar hasta la url "https://bridge.codepulso.com/"
   When hacer click en el campo de usuario "//*[@id='root']/section/section/div[2]/form/input"
